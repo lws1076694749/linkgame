@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/room">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/room">
     <!-- 游戏主界面的自定义组件 -->
     <com.example.lenovo.linkgame.view.GameView
         android:id="@+id/gameView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_height="wrap_content"/>
+
     <!-- 水平排列的LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector" />
+            android:background="@drawable/button_selector"/>
         <!-- 显示游戏剩余时间的文本框 -->
         <TextView
             android:id="@+id/timeText"
@@ -31,6 +31,6 @@
             android:width="150dp"
             android:gravity="center"
             android:textColor="#ff9"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
     </LinearLayout>
 </RelativeLayout>

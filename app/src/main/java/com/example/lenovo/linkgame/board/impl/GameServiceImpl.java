@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import com.example.lenovo.linkgame.board.AbstractBoard;
 import com.example.lenovo.linkgame.board.GameService;
@@ -78,7 +79,7 @@ public class GameServiceImpl implements GameService {
     // 根据触碰点的位置查找相应的方块
     @Override
     public Piece findPiece(float touchX, float touchY) {
-        // 由于在创建Piece对象的时候, 将每个Piece的开始座标加了
+        // 由于在创建Piece对象的时候, 将每个Piece的开始坐标加了
         // GameConf中设置的beginImageX/beginImageY值, 因此这里要减去这个值
         int relativeX = (int) touchX - this.config.getBeginImageX();
         int relativeY = (int) touchY - this.config.getBeginImageY();
@@ -102,6 +103,7 @@ public class GameServiceImpl implements GameService {
             return null;
         }
         // 返回Piece[][]数组的指定元素
+        Log.d("MyLog",indexX+" "+indexY);
         return this.pieces[indexX][indexY];
     }
 

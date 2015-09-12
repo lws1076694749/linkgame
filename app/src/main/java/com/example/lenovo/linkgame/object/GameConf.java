@@ -1,6 +1,9 @@
 package com.example.lenovo.linkgame.object;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+
+import com.example.lenovo.linkgame.R;
 
 /**
  * Description:保存游戏配置的对象
@@ -8,8 +11,8 @@ import android.content.Context;
 public class GameConf
 {
     // 设置连连看的每个方块的图片的宽、高
-    public static final int PIECE_WIDTH = 40;
-    public static final int PIECE_HEIGHT = 40;
+    public static final int PIECE_WIDTH = 80;
+    public static final int PIECE_HEIGHT = 80;
     // 记录游戏的总时间（100秒）.
     public static int DEFAULT_TIME = 100;
     // Piece[][]数组第一维的长度

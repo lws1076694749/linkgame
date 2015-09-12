@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import com.example.lenovo.linkgame.board.GameService;
 import com.example.lenovo.linkgame.board.impl.GameServiceImpl;
 import com.example.lenovo.linkgame.object.GameConf;
@@ -25,21 +24,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Description: <br/>
- * site: <a href="http://www.crazyit.org">crazyit.org</a> <br/>
- * Copyright (C), 2001-2012, Yeeku.H.Lee <br/>
- * This program is protected by copyright laws. <br/>
- * Program Name: <br/>
- * Date:
- *
- * @author Yeeku.H.Lee kongyeeku@163.com
- * @version 1.0
+ * 游戏主程序
  */
 public class Link extends Activity {
     // 播放音效的SoundPool
     SoundPool soundPool = new SoundPool(2
             , AudioManager.STREAM_SYSTEM, 8);
     int dis;
+    //屏幕宽度
+    private int screenWidth;
+    //屏幕高度
+    private int screenHeight;
     // 游戏配置对象
     private GameConf config;
     // 游戏业务逻辑接口
@@ -91,7 +86,14 @@ public class Link extends Activity {
 
     // 初始化游戏的方法
     private void init() {
-        config = new GameConf(8, 9, 2, 10, 100000, this);
+        //初始化游戏参数设置
+        screenWidth=getWindowManager().getDefaultDisplay().getWidth();
+        screenHeight=getWindowManager().getDefaultDisplay().getHeight();
+        int indexNumX=8;
+        int indexNumY=12;
+        int startX=(screenWidth-GameConf.PIECE_WIDTH*indexNumX)/2;
+        int startY=90;
+        config = new GameConf(indexNumX, indexNumY, startX, startY, 99000, this);
         // 得到游戏区域对象
         gameView = (GameView) findViewById(R.id.gameView);
         // 获取显示剩余时间的文本框
@@ -159,7 +161,7 @@ public class Link extends Activity {
     }
 
     // 触碰游戏区域的处理方法
-    private void gameViewTouchDown(MotionEvent event) //①
+    private void gameViewTouchDown(MotionEvent event)
     {
         // 获取GameServiceImpl中的Piece[][]数组
         Piece[][] pieces = gameService.getPieces();
@@ -168,13 +170,13 @@ public class Link extends Activity {
         // 获取用户点击的y座标
         float touchY = event.getY();
         // 根据用户触碰的座标得到对应的Piece对象
-        Piece currentPiece = gameService.findPiece(touchX, touchY);  //②
+        Piece currentPiece = gameService.findPiece(touchX, touchY);
         // 如果没有选中任何Piece对象(即鼠标点击的地方没有图片), 不再往下执行
         if (currentPiece == null)
             return;
         // 将gameView中的选中方块设为当前方块
         this.gameView.setSelectedPiece(currentPiece);
-        // 表示之前没有选中任何一个Piece
+        /* 表示之前没有选中任何一个Piece */
         if (this.selected == null) {
             // 将当前方块设为已选中的方块, 重新将GamePanel绘制, 并不再往下执行
             this.selected = currentPiece;
@@ -185,7 +187,7 @@ public class Link extends Activity {
         if (this.selected != null) {
             // 在这里就要对currentPiece和prePiece进行判断并进行连接
             LinkInfo linkInfo = this.gameService.link(this.selected,
-                    currentPiece);   //③
+                    currentPiece);
             // 两个Piece不可连, linkInfo为null
             if (linkInfo == null) {
                 // 如果连接不成功, 将当前方块设为选中方块
@@ -238,7 +240,7 @@ public class Link extends Activity {
      * @param pieces       系统中还剩的全部方块
      */
     private void handleSuccessLink(LinkInfo linkInfo, Piece prePiece,
-                                   Piece currentPiece, Piece[][] pieces)  //④
+                                   Piece currentPiece, Piece[][] pieces)
     {
         // 它们可以相连, 让GamePanel处理LinkInfo
         this.gameView.setLinkInfo(linkInfo);
@@ -248,7 +250,7 @@ public class Link extends Activity {
         // 将两个Piece对象从数组中删除
         pieces[prePiece.getIndexX()][prePiece.getIndexY()] = null;
         pieces[currentPiece.getIndexX()][currentPiece.getIndexY()] = null;
-        // 将选中的方块设置null。
+        // 将选中的方块设置null
         this.selected = null;
         // 播放音效
         soundPool.play(dis, 1, 1, 0, 0, 1);
